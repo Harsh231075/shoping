@@ -1,5 +1,5 @@
 const express = require('express');
-const { createUser, loginUser } = require('../controller/user.controller.js')
+const { createUser, loginUser, getUserById, editUserData } = require('../controller/user.controller.js')
 const {
   createProduct,
   getAllProducts,
@@ -15,6 +15,10 @@ const router = express.Router();
 router.post('/user', createUser);
 
 router.post('/login', loginUser);
+
+router.get('/user/:id', getUserById); // Get user by ID
+
+router.put('/update/:id', editUserData); // Edit user data
 
 // Route for creating a new product
 router.post('/product', createProduct);

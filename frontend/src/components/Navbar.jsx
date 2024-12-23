@@ -1,18 +1,12 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState } from "react";
+import { Link } from "react-router-dom";
 
 export default function Navbar() {
   const [isAccountMenuOpen, setAccountMenuOpen] = useState(false);
-  const [isCartMenuOpen, setCartMenuOpen] = useState(false);
   const [isMobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const toggleAccountMenu = () => {
     setAccountMenuOpen((prev) => !prev);
-  };
-
-  const toggleCartMenu = () => {
-    setCartMenuOpen((prev) => !prev);
-
   };
 
   const toggleMobileMenu = () => {
@@ -22,250 +16,125 @@ export default function Navbar() {
   const handleLogout = () => {
     localStorage.removeItem("authToken");
     localStorage.removeItem("userId");
+    localStorage.removeItem("role");
     alert("You have been logged out.");
+    window.location.reload(); // Reload the page to update the navbar.
   };
 
+  const authToken = localStorage.getItem("authToken");
+  const role = localStorage.getItem("role");
 
-  const closeMobileMenu = () => {
-    setMobileMenuOpen(false);
-  };
   return (
-    <nav className="bg-zinc-500 text-white antialiased fixed top-0 h- right-0 left-0 z-20">
-      <div className="max-w-screen-xl px-2 mx-auto 2xl:px-0 py-4">
-        <div className="flex items-center justify-between">
-          {/* Logo Section */}
-          <div className="flex items-center space-x-8">
-            <div className="shrink-0 w-20">
-              <Link to="/" className="">
-                <img
-                  className="block w-auto h-8 dark:hidden"
-                  src="logo.jpg"
-                  alt="Logo"
-                />
-                <img
-                  className="hidden w-auto h-8 dark:block"
-                  src="/logo.jpg"
-                  alt="Dark Logo"
-                />
-              </Link>
-            </div>
+    <nav className="bg-gradient-to-r from-blue-800 to-black text-white shadow-md antialiased fixed top-0 right-0 left-0 z-20">
+      <div className="max-w-screen-xl px-4 mx-auto py-4 flex justify-between items-center">
+        {/* Logo */}
+        <Link to="/" className="shrink-0">
+          <img className="h-10" src="Logo.webp" alt="Logo" />
+        </Link>
 
-            {/* Navbar Links */}
-            <ul className="hidden lg:flex items-center gap-6 md:gap-8 py-3">
-              <li className="shrink-0">
-                <Link
-                  to="/"
-                  className="text-sm font-medium text-gray-900 hover:text-primary-700 dark:text-white dark:hover:text-primary-500"
-                >
-                  Home
-                </Link>
-              </li>
-              <li className="shrink-0">
-                <Link
-                  to="/electronics"
-                  className="text-sm font-medium text-gray-900 hover:text-primary-700 dark:text-white dark:hover:text-primary-500"
-                >
-                  Electronics
-                </Link>
-              </li>
-              <li className="shrink-0">
-                <Link
-                  to="/shoes"
-                  className="text-sm font-medium text-gray-900 hover:text-primary-700 dark:text-white dark:hover:text-primary-500"
-                >
-                  Shoes
-                </Link>
-              </li>
-              <li className="shrink-0">
-                <Link
-                  to="/clothes"
-                  className="text-sm font-medium text-gray-900 hover:text-primary-700 dark:text-white dark:hover:text-primary-500"
-                >
-                  Clothes
-                </Link>
-              </li>
-              <li className="shrink-0">
-                <Link
-                  to="/about"
-                  className="text-sm font-medium text-gray-900 hover:text-primary-700 dark:text-white dark:hover:text-primary-500"
-                >
-                  About
-                </Link>
-              </li>
-            </ul>
+        {/* Desktop Links */}
+        <ul className="hidden lg:flex items-center gap-8">
+          <li><Link to="/" className="hover:text-gray-300">Home</Link></li>
+          <li><Link to="/electronics" className="hover:text-gray-300">Electronics</Link></li>
+          <li><Link to="/shoes" className="hover:text-gray-300">Shoes</Link></li>
+          <li><Link to="/clothes" className="hover:text-gray-300">Clothes</Link></li>
+          {role !== "admin" && <li><Link to="/about" className="hover:text-gray-300">About</Link></li>}
+        </ul>
 
-          </div>
+        {/* Action Buttons */}
+        <div className="flex items-center space-x-4">
+          {/* My Cart */}
+          <Link to="/cart" className="hover:text-gray-300 flex items-center">
+            {/* <svg className="w-6 h-6 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M3 3h2l.879 2.757m2.77 8.486A3 3 0 0012 19h6a3 3 0 002.992-3.253L19.743 7H5.212M16 9a4 4 0 11-8 0 4 4 0 018 0z"
+              />
+            </svg> */}
+            My Cart
+          </Link>
 
-          {/* Action Buttons */}
-          <div className="flex items-center lg:space-x-2">
-            {/* My Cart Dropdown */}
-            <div className="relative">
-              <button
-                onClick={toggleCartMenu}
-                className="inline-flex items-center rounded-lg justify-center p-2 hover:bg-gray-100 dark:hover:bg-gray-700 text-sm font-medium text-gray-900 dark:text-white"
-              >
-                <svg
-                  className="w-5 h-5 lg:mr-1"
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="24"
-                  height="24"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    stroke="currentColor"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="M5 4h1.5L9 16m0 0h8m-8 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm8 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm-8.5-3h9.25L19 7H7.312"
-                  />
-                </svg>
-                <Link
-                  to="/cart"
-                  className="block px-4 py-2 text-sm  dark:text-white hover:bg-gray-100 dark:hover:bg-gray-600"
-                >
-                  View Cart
-                </Link>
-
-              </button>
-
-              {isCartMenuOpen && (
-                <div className="absolute right-0 mt-2 w-48 bg-white dark:bg-gray-700 rounded-lg shadow-lg">
-
-                </div>
-              )}
-            </div>
-
-            {/* User Account Dropdown */}
-            <div className="relative">
+          {/* Account / Signup */}
+          <div className="relative">
+            {authToken ? (
               <button
                 onClick={toggleAccountMenu}
-                className="inline-flex items-center rounded-lg p-2 hover:bg-gray-100 dark:hover:bg-gray-700 text-sm font-medium text-gray-900 dark:text-white"
+                className="hover:text-gray-300 flex items-center"
               >
-                <svg
-                  className="w-5 h-5 mr-1"
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                >
+                {/* <svg className="w-6 h-6 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    d="M7 17v1a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1v-1a3 3 0 0 0-3-3h-4a3 3 0 0 0-3 3Zm8-9a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M5.121 19.121A4 4 0 118.242 16h7.516a4 4 0 113.121 3.121M15 10a5 5 0 11-10 0 5 5 0 0110 0z"
                   />
-                </svg>
+                </svg> */}
                 Account
               </button>
+            ) : (
+              <Link to="/signup" className="hover:text-gray-300">Signup</Link>
+            )}
 
-              {isAccountMenuOpen && (
-                <div className="absolute right-0 mt-2 w-48 bg-white dark:bg-gray-700 rounded-lg shadow-lg">
-                  <ul className="py-2">
-                    <li>
-                      <Link
-                        to="/profile"
-                        className="block px-4 py-2 text-sm text-gray-700 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-600"
-                      >
-                        My Profile
-                      </Link>
-                    </li>
-                    <li>
-                      <Link
-                        to="/history"
-                        className="block px-4 py-2 text-sm text-gray-700 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-600"
-                      >
-                        My Orders
-                      </Link>
-                    </li>
-                    <li>
-                      <button
-                        onClick={handleLogout}
-                        className="w-full text-left px-4 py-2 text-sm text-gray-700 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-600"
-                      >
-                        Logout
-                      </button>
-                    </li>
-                  </ul>
-                </div>
-              )}
-            </div>
-
-            {/* Mobile Menu Toggle */}
-            <button
-              onClick={toggleMobileMenu}
-              type="button"
-              className="inline-flex lg:hidden items-center justify-center p-2 hover:bg-gray-100 rounded-md dark:hover:bg-gray-700"
-            >
-              <span className="sr-only">Open main menu</span>
-              <svg
-                className="w-6 h-6"
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  stroke="currentColor"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M4 6h16M4 12h16m-7 6h7"
-                />
-              </svg>
-            </button>
+            {/* Account Dropdown */}
+            {isAccountMenuOpen && authToken && (
+              <div className="absolute right-0 mt-2 bg-white text-black p-2 rounded shadow">
+                {role === "admin" && (
+                  <Link
+                    to="/profile"
+                    className="block  py-2 hover:bg-gray-200"
+                  >
+                    Dashboard
+                  </Link>
+                )}
+                <Link
+                  to="/history"
+                  className="block  py-2 hover:bg-gray-200"
+                >
+                  My Orders
+                </Link>
+                <button
+                  onClick={handleLogout}
+                  className="block w-full text-left px-4 py-2 hover:bg-gray-200"
+                >
+                  Logout
+                </button>
+              </div>
+            )}
           </div>
+
+          {/* Mobile Menu Toggle */}
+          <button
+            onClick={toggleMobileMenu}
+            className="lg:hidden hover:text-gray-300"
+          >
+            <svg
+              className="w-6 h-6"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M4 6h16M4 12h16m-7 6h7"
+              />
+            </svg>
+          </button>
         </div>
       </div>
 
-      {/* Mobile Menu */}
+      {/* Mobile Dropdown */}
       {isMobileMenuOpen && (
-        <div className="lg:hidden bg-white dark:bg-gray-800 shadow-lg">
-          <ul className="py-4 space-y-2">
-            <li>
-              <Link
-                to="/"
-                onClick={closeMobileMenu}
-                className="block px-4 py-2 text-gray-700 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-600"
-              >
-                Home
-              </Link>
-            </li>
-            <li>
-              <Link
-                to="/electronics"
-                onClick={closeMobileMenu}
-                className="block px-4 py-2 text-gray-700 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-600"
-              >
-                Electronics
-              </Link>
-            </li>
-            <li>
-              <Link
-                to="/shoes"
-                onClick={closeMobileMenu}
-                className="block px-4 py-2 text-gray-700 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-600"
-              >
-                Shoes
-              </Link>
-            </li>
-            <li>
-              <Link
-                to="/clothes"
-                onClick={closeMobileMenu}
-                className="block px-4 py-2 text-gray-700 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-600"
-              >
-                Clothes
-              </Link>
-            </li>
-            <li>
-              <Link
-                to="/about"
-                onClick={closeMobileMenu}
-                className="block px-4 py-2 text-gray-700 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-600"
-              >
-                About
-              </Link>
-            </li>
-          </ul>
-        </div>
+        <ul className="lg:hidden bg-zinc-500 text-white space-y-2 px-4 py-2">
+          <li><Link to="/" onClick={() => setMobileMenuOpen(false)} className="block hover:text-gray-300">Home</Link></li>
+          <li><Link to="/electronics" onClick={() => setMobileMenuOpen(false)} className="block hover:text-gray-300">Electronics</Link></li>
+          <li><Link to="/shoes" onClick={() => setMobileMenuOpen(false)} className="block hover:text-gray-300">Shoes</Link></li>
+          <li><Link to="/clothes" onClick={() => setMobileMenuOpen(false)} className="block hover:text-gray-300">Clothes</Link></li>
+          <li><Link to="/about" onClick={() => setMobileMenuOpen(false)} className="block hover:text-gray-300">About</Link></li>
+        </ul>
       )}
     </nav>
   );

@@ -39,49 +39,52 @@ const OrderHistory = () => {
   };
 
   return (
-    <div className="container mx-auto mt-20 px-4 py-6">
-      <h1 className="text-2xl font-bold mb-4 text-center">Order History</h1>
+    <div className="container mx-auto mt-16 px-6 py-8">
+      <h1 className="text-3xl font-semibold mb-6 text-center text-gray-800">Order History</h1>
 
       {/* Date Range Filter */}
-      <div className="flex flex-col sm:flex-row items-center gap-4 mb-6">
+      <div className="flex flex-col sm:flex-row items-center gap-6 mb-8">
         <input
           type="date"
           value={startDate}
           onChange={(e) => setStartDate(e.target.value)}
-          className="border p-2 rounded w-full sm:w-auto max-w-xs"
+          className="border p-3 rounded-md w-full sm:w-auto max-w-xs text-gray-700 focus:ring-2 focus:ring-blue-500"
         />
         <input
           type="date"
           value={endDate}
           onChange={(e) => setEndDate(e.target.value)}
-          className="border p-2 rounded w-full sm:w-auto max-w-xs"
+          className="border p-3 rounded-md w-full sm:w-auto max-w-xs text-gray-700 focus:ring-2 focus:ring-blue-500"
         />
         <button
           onClick={handleFilter}
-          className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 w-full sm:w-auto"
+          className="bg-blue-500 text-white px-6 py-3 rounded-md hover:bg-blue-600 transition-colors w-full sm:w-auto"
         >
           Filter
         </button>
       </div>
 
       {/* Orders Table */}
-      <div className="overflow-x-auto">
-        <table className="min-w-full bg-white border rounded shadow-md">
-          <thead>
-            <tr className="bg-gray-100 text-left">
-              <th className="py-2 px-4">Product Name</th>
-              <th className="py-2 px-4">Quantity</th>
-              <th className="py-2 px-4">Total Amount</th>
-              <th className="py-2 px-4">Date</th>
+      <div className="overflow-x-auto rounded-lg shadow-lg">
+        <table className="min-w-full bg-white border-separate border-spacing-0 text-gray-800">
+          <thead className="bg-gray-100">
+            <tr>
+              <th className="py-3 px-6 text-left text-sm font-medium text-gray-600">Product Name</th>
+              <th className="py-3 px-6 text-left text-sm font-medium text-gray-600">Quantity</th>
+              <th className="py-3 px-6 text-left text-sm font-medium text-gray-600">Total Amount</th>
+              <th className="py-3 px-6 text-left text-sm font-medium text-gray-600">Date</th>
             </tr>
           </thead>
           <tbody>
             {filteredOrders.map((order, index) => (
-              <tr key={index} className="border-t">
-                <td className="py-2 px-4 text-sm sm:text-base">{order.productName || "N/A"}</td>
-                <td className="py-2 px-4 text-sm sm:text-base">{order.quantity || "0"}</td>
-                <td className="py-2 px-4 text-sm sm:text-base">${order.totalAmount || "0.00"}</td>
-                <td className="py-2 px-4 text-sm sm:text-base">{order.date || "N/A"}</td>
+              <tr
+                key={index}
+                className={`border-t ${index % 2 === 0 ? "bg-gray-50" : "bg-white"} hover:bg-gray-100 transition-colors`}
+              >
+                <td className="py-3 px-6 text-sm sm:text-base">{order.productName || "N/A"}</td>
+                <td className="py-3 px-6 text-sm sm:text-base">{order.quantity || "0"}</td>
+                <td className="py-3 px-6 text-sm sm:text-base">${order.totalAmount || "0.00"}</td>
+                <td className="py-3 px-6 text-sm sm:text-base">{order.date || "N/A"}</td>
               </tr>
             ))}
           </tbody>

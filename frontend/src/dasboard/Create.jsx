@@ -70,63 +70,63 @@ const Create = () => {
   };
 
   return (
-    <div className="max-w-4xl mx-auto p-6 bg-gray-100 shadow-md rounded-lg">
-      <h2 className="text-2xl font-bold mb-6">Add New Product</h2>
-      <form onSubmit={handleSubmit} className="space-y-4">
+    <div className="max-w-4xl mx-auto p-6 bg-gradient-to-r from-indigo-50 to-blue-50 rounded-lg shadow-xl">
+      <h2 className="text-3xl font-extrabold text-gray-800 mb-6 text-center">Add New Product</h2>
+      <form onSubmit={handleSubmit} className="space-y-6">
         {/* Name */}
-        <div>
-          <label className="block text-sm font-medium text-gray-700">Name</label>
+        <div className="form-group">
+          <label className="block text-lg font-medium text-gray-700 mb-2">Name</label>
           <input
             type="text"
             name="name"
             value={formData.name}
             onChange={handleInputChange}
             required
-            className="w-full px-4 py-2 border rounded-lg"
+            className="w-full px-4 py-3 border rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:outline-none"
           />
         </div>
 
         {/* Description */}
-        <div>
-          <label className="block text-sm font-medium text-gray-700">Description</label>
+        <div className="form-group">
+          <label className="block text-lg font-medium text-gray-700 mb-2">Description</label>
           <textarea
             name="description"
             value={formData.description}
             onChange={handleInputChange}
             required
-            className="w-full px-4 py-2 border rounded-lg"
+            className="w-full px-4 py-3 border rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:outline-none"
           />
         </div>
 
-        {/* Price */}
-        <div className="grid grid-cols-2 gap-4">
-          <div>
-            <label className="block text-sm font-medium text-gray-700">Price</label>
+        {/* Price and Discount Price */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="form-group">
+            <label className="block text-lg font-medium text-gray-700 mb-2">Price</label>
             <input
               type="number"
               name="price"
               value={formData.price}
               onChange={handleInputChange}
               required
-              className="w-full px-4 py-2 border rounded-lg"
+              className="w-full px-4 py-3 border rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:outline-none"
             />
           </div>
-          <div>
-            <label className="block text-sm font-medium text-gray-700">Discount Price</label>
+          <div className="form-group">
+            <label className="block text-lg font-medium text-gray-700 mb-2">Discount Price</label>
             <input
               type="number"
               name="discountPrice"
               value={formData.discountPrice}
               onChange={handleInputChange}
               required
-              className="w-full px-4 py-2 border rounded-lg"
+              className="w-full px-4 py-3 border rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:outline-none"
             />
           </div>
         </div>
 
         {/* Images */}
-        <div>
-          <label className="block text-sm font-medium text-gray-700">Images (5 URLs)</label>
+        <div className="form-group">
+          <label className="block text-lg font-medium text-gray-700 mb-2">Images (5 URLs)</label>
           {formData.images.map((url, index) => (
             <input
               key={index}
@@ -135,19 +135,19 @@ const Create = () => {
               value={url}
               onChange={(e) => handleImageChange(index, e.target.value)}
               required
-              className="w-full px-4 py-2 border rounded-lg mt-2"
+              className="w-full px-4 py-3 border rounded-lg shadow-sm mt-2 focus:ring-2 focus:ring-blue-500 focus:outline-none"
             />
           ))}
         </div>
 
         {/* Category */}
-        <div>
-          <label className="block text-sm font-medium text-gray-700">Category</label>
+        <div className="form-group">
+          <label className="block text-lg font-medium text-gray-700 mb-2">Category</label>
           <select
             name="category"
             value={formData.category}
             onChange={handleInputChange}
-            className="w-full px-4 py-2 border rounded-lg"
+            className="w-full px-4 py-3 border rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:outline-none"
           >
             {["Electronics", "Clothing", "Books", "Furniture", "Food", "Toys", "Shoes"].map(
               (category) => (
@@ -160,47 +160,47 @@ const Create = () => {
         </div>
 
         {/* Brand */}
-        <div>
-          <label className="block text-sm font-medium text-gray-700">Brand</label>
+        <div className="form-group">
+          <label className="block text-lg font-medium text-gray-700 mb-2">Brand</label>
           <input
             type="text"
             name="brand"
             value={formData.brand}
             onChange={handleInputChange}
             required
-            className="w-full px-4 py-2 border rounded-lg"
+            className="w-full px-4 py-3 border rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:outline-none"
           />
         </div>
 
         {/* Stock */}
-        <div>
-          <label className="block text-sm font-medium text-gray-700">Stock</label>
+        <div className="form-group">
+          <label className="block text-lg font-medium text-gray-700 mb-2">Stock</label>
           <input
             type="number"
             name="stock"
             value={formData.stock}
             onChange={handleInputChange}
             required
-            className="w-full px-4 py-2 border rounded-lg"
+            className="w-full px-4 py-3 border rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:outline-none"
           />
         </div>
 
         {/* Tags */}
-        <div>
-          <label className="block text-sm font-medium text-gray-700">Tags (comma separated)</label>
+        <div className="form-group">
+          <label className="block text-lg font-medium text-gray-700 mb-2">Tags (comma separated)</label>
           <input
             type="text"
             name="tags"
             value={formData.tags.join(",")}
             onChange={handleTagChange}
-            className="w-full px-4 py-2 border rounded-lg"
+            className="w-full px-4 py-3 border rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:outline-none"
           />
         </div>
 
         {/* Submit Button */}
         <button
           type="submit"
-          className="w-full bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700"
+          className="w-full bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition-all duration-300"
         >
           Submit
         </button>

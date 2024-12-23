@@ -7,9 +7,11 @@ function Home() {
   return (
     <>
       <Banner></Banner>
-      <Cards></Cards>
-      <Clothes></Clothes>
-      <Electronic></Electronic>
+      <div className='container m-auto '>
+        <Cards></Cards>
+        <Clothes></Clothes>
+        <Electronic></Electronic>
+      </div>
     </>
   )
 }

@@ -5,6 +5,8 @@ const cors = require('cors');
 const connectDB = require('./config');
 const orderRoutes = require('./routes/orders');
 const user = require('./routes/user');
+const records = require('./routes/records');
+
 const app = express();
 const port = process.env.PORT || 3000;
 
@@ -15,6 +17,8 @@ app.use(cors());
 connectDB();
 app.use('/api/', user);
 app.use('/api/orders', orderRoutes);
+app.use('/api/record/', records);
+
 
 
 

@@ -95,12 +95,12 @@ function MyProfile() {
               </ListItemPrefix>
               <Link to="/"> Back To Home</Link>
             </ListItem>
-            <ListItem>
+            {/* <ListItem>
               <ListItemPrefix>
                 <PowerIcon className="h-5 w-5" />
               </ListItemPrefix>
               Log Out
-            </ListItem>
+            </ListItem> */}
           </List>
         </Card>
       </div>

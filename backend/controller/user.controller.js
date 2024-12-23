@@ -6,7 +6,7 @@ const createUser = async (req, res) => {
   try {
     const data = req.body;
     // Check if data exists
-    if (!data || !data.name || !data.email || !data.password || !data.role) {
+    if (!data || !data.name || !data.email || !data.password || !data.role || !data.imageUrl) {
       return res.status(400).json({ message: "Please provide all required fields (name, email, password, role)." });
     }
 
@@ -26,6 +26,7 @@ const createUser = async (req, res) => {
       email: data.email,
       password: hashedPassword, // Store the hashed password
       role: data.role,
+      photo: data.imageUrl
     });
 
     // Save the user to the database
@@ -41,10 +42,10 @@ const createUser = async (req, res) => {
 
 const loginUser = async (req, res) => {
   try {
-    const { email, password } = req.body;
+    const { email, password, role } = req.body;
 
     // Check if email and password are provided
-    if (!email || !password) {
+    if (!email || !password || !role) {
       return res.status(400).json({ message: "Please provide both email and password." });
     }
 
@@ -52,6 +53,10 @@ const loginUser = async (req, res) => {
     const user = await User.findOne({ email });
     if (!user) {
       return res.status(400).json({ message: "User with this email does not exist." });
+    }
+
+    if (user.role !== role) {
+      return res.status(400).json({ message: "Given role is not defined with the email." });
     }
 
     // Compare the provided password with the stored hashed password
@@ -71,7 +76,9 @@ const loginUser = async (req, res) => {
     res.status(200).json({
       message: 'Login successful!',
       token: token,
-      userId: user._id
+      userId: user._id,
+      role: user.role,
+      photo: user.photo
     });
 
   } catch (error) {
@@ -80,4 +87,42 @@ const loginUser = async (req, res) => {
   }
 };
 
-module.exports = { createUser, loginUser }; // Export the function for use in routes
+const getUserById = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const user = await User.findById(id);
+    if (!user) {
+      return res.status(404).json({ message: "User not found." });
+    }
+
+    res.status(200).json(user);
+  } catch (error) {
+    console.error("Error fetching user:", error);
+    res.status(500).json({ message: "An error occurred while fetching the user." });
+  }
+};
+
+const editUserData = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const updates = req.body;
+
+    if (updates.password) {
+      updates.password = await bcrypt.hash(updates.password, 10); // Hash new password
+    }
+
+    const updatedUser = await User.findByIdAndUpdate(id, updates, { new: true });
+
+    if (!updatedUser) {
+      return res.status(404).json({ message: "User not found or update failed." });
+    }
+
+    res.status(200).json({ message: "User updated successfully.", updatedUser });
+  } catch (error) {
+    console.error("Error updating user:", error);
+    res.status(500).json({ message: "An error occurred while updating the user." });
+  }
+};
+
+module.exports = { createUser, loginUser, getUserById, editUserData }; // Export the function for use in routes

@@ -14,6 +14,9 @@ import Signup from "./pages/Signup";
 import OrderHistory from "./pages/OrderHistory";
 import { Toaster } from 'react-hot-toast';
 import MyProfile from "./dasboard/MyProfile";
+import Footer from "./components/Footer";
+import AdminContactForm from "./pages/AdminContactForm";
+
 
 function App() {
   const location = useLocation();
@@ -36,8 +39,10 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/history" element={<OrderHistory />} />
+          < Route path="/request" element={<AdminContactForm />} />
         </Routes>
         <Toaster />
+        {!hideNavbarFooter && <Footer />}
       </ProductProvider>
     </>
   );

@@ -1,14 +1,15 @@
-// Frontend (React): Login Page
 import React, { useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
+
 function Login() {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
     email: "",
     password: "",
+    role: "user", // Default role
   });
 
   const handleChange = (e) => {
@@ -29,6 +30,7 @@ function Login() {
       if (response.data.token) {
         localStorage.setItem("authToken", response.data.token);
         localStorage.setItem("userId", response.data.userId);
+        localStorage.setItem("role", response.data.role);
       }
     } catch (error) {
       toast.error("Error: " + error.response.data.message);
@@ -73,22 +75,35 @@ function Login() {
           />
         </div>
 
+        <div className="mb-4">
+          <label htmlFor="role" className="block text-gray-700 font-medium mb-2">
+            Role
+          </label>
+          <select
+            id="role"
+            name="role"
+            value={formData.role}
+            onChange={handleChange}
+            required
+            className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+          >
+            <option value="user">User</option>
+            <option value="admin">Admin</option>
+          </select>
+        </div>
+
         <button
           type="submit"
           className="w-full bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600 transition"
         >
           Login
         </button>
-        <Link to='/signup' >
-          <h1 className="text-right mt-5 text-blue-500">Create a account</h1>
+        <Link to='/signup'>
+          <h1 className="text-right mt-5 text-blue-500">Create an account</h1>
         </Link>
       </form>
-
     </div>
   );
 }
 
 export default Login;
-
-
-

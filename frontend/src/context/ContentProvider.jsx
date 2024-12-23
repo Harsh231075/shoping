@@ -46,9 +46,21 @@ export const ProductProvider = ({ children }) => {
     setCartItems((prevItems) => prevItems.filter((cartItem) => cartItem._id !== _id));
   };
 
+  const updateProduct = async (_id, updatedProduct) => {
+    try {
+      const response = await axios.put(`http://localhost:4001/api/product/${_id}`, updatedProduct);
+
+      setProducts((prev) =>
+        prev.map((product) => (product._id === _id ? response.data.product : product))
+      );
+    } catch (error) {
+      console.error("Error updating product:", error);
+    }
+  };
+
 
   return (
-    <ProductContext.Provider value={{ products, addToCart, removeFromCart, cartItems }}>
+    <ProductContext.Provider value={{ products, addToCart, removeFromCart, cartItems, updateProduct }}>
       {children}
     </ProductContext.Provider>
   );
