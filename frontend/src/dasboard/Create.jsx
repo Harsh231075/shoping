@@ -39,7 +39,7 @@ const Create = () => {
     }
 
     try {
-      const response = await fetch("http://localhost:4001/api/product", {
+      const response = await fetch("https://shoping-txma.onrender.com/api/product", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
