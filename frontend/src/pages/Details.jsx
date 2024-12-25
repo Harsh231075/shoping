@@ -12,7 +12,7 @@ function Details() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    fetch(`http://localhost:4001/api/product/${_id}`)
+    fetch(`https://shoping-txma.onrender.com/api/product/${_id}`)
       .then((response) => response.json())
       .then((data) => {
         setItem(data.product);
