@@ -39,7 +39,7 @@ function Signup() {
     }
 
     try {
-      const response = await axios.post("http://localhost:4001/api/user", formData);
+      const response = await axios.post("https://shoping-txma.onrender.com/api/user", formData);
       toast.success("Signup successfully");
       navigate("/login");
       console.log(response);
