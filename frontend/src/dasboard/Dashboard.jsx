@@ -9,7 +9,7 @@ const Dashboard = () => {
   const fetchStats = async () => {
     try {
       const response = await axios.get(
-        "http://localhost:4001/api/record/dashboard-stats",
+        "https://shoping-txma.onrender.com/api/record/dashboard-stats",
         {
           params: { startDate, endDate },
         }
