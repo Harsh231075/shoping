@@ -23,7 +23,7 @@ const Profile = () => {
   useEffect(() => {
     const fetchProfile = async () => {
       try {
-        const response = await axios.get(`http://localhost:4001/api/user/${userId}`);
+        const response = await axios.get(`https://shoping-txma.onrender.com/api/user/${userId}`);
         setProfileData(response.data);
         setUpdatedData({
           name: response.data.name,
