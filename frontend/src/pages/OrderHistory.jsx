@@ -13,7 +13,7 @@ const OrderHistory = () => {
   useEffect(() => {
     const fetchOrders = async () => {
       try {
-        const response = await axios.get(`http://localhost:4001/api/orders/history/${userId}`, {
+        const response = await axios.get(`https://shoping-txma.onrender.com/api/orders/history/${userId}`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
