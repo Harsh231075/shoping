@@ -1,16 +1,21 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
-import { useNavigate } from "react-router-dom";
 
 function Login() {
   const navigate = useNavigate();
+  const location = useLocation(); // To get the previous page
   const [formData, setFormData] = useState({
     email: "",
     password: "",
     role: "user", // Default role
   });
+
+  // Determine the redirect path (default is '/cart')
+  const redirectPath = location.state?.from?.pathname && location.state.from.pathname !== '/signup'
+    ? location.state.from.pathname
+    : '/';
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -25,15 +30,14 @@ function Login() {
     try {
       const response = await axios.post("http://localhost:4001/api/login", formData);
       toast.success("Login successfully");
-      navigate('/cart');
-      console.log(response.data);
       if (response.data.token) {
         localStorage.setItem("authToken", response.data.token);
         localStorage.setItem("userId", response.data.userId);
         localStorage.setItem("role", response.data.role);
       }
+      navigate(redirectPath); // Redirect to the saved path
     } catch (error) {
-      toast.error("Error: " + error.response.data.message);
+      toast.error("Error: " + error.response?.data?.message || "Login failed");
     }
   };
 
