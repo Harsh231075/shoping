@@ -16,7 +16,7 @@ export const ProductProvider = ({ children }) => {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const response = await axios.get('http://localhost:4001/api/products'); // Replace with your backend API
+        const response = await axios.get('https://shoping-txma.onrender.com/api/products'); // Replace with your backend API
         setProducts(response.data.products);
       } catch (err) {
         console.log('Failed to fetch products:', err.message);
@@ -48,7 +48,7 @@ export const ProductProvider = ({ children }) => {
 
   const updateProduct = async (_id, updatedProduct) => {
     try {
-      const response = await axios.put(`http://localhost:4001/api/product/${_id}`, updatedProduct);
+      const response = await axios.put(`https://shoping-txma.onrender.com/api/product/${_id}`, updatedProduct);
 
       setProducts((prev) =>
         prev.map((product) => (product._id === _id ? response.data.product : product))
