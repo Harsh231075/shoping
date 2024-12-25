@@ -51,7 +51,7 @@ const Profile = () => {
   const handleUpdate = async (e) => {
     e.preventDefault();
     try {
-      await axios.put(`http://localhost:4001/api/update/${userId}`, updatedData);
+      await axios.put(`https://shoping-txma.onrender.com/api/update/${userId}`, updatedData);
       toast.success("Profile updated successfully!");
       setProfileData((prev) => ({
         ...prev,
