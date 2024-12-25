@@ -28,7 +28,7 @@ function Login() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post("http://localhost:4001/api/login", formData);
+      const response = await axios.post("https://shoping-txma.onrender.com/api/login", formData);
       toast.success("Login successfully");
       if (response.data.token) {
         localStorage.setItem("authToken", response.data.token);
