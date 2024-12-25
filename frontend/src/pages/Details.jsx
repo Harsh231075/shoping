@@ -1,12 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useProducts } from '../context/ContentProvider';
+import { useNavigate } from 'react-router-dom';
 
 function Details() {
   const { addToCart, cartItems } = useProducts();
   const { _id } = useParams();
   const [item, setItem] = useState(null);
   const [selectedImage, setSelectedImage] = useState(''); // State for the top image
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     fetch(`http://localhost:4001/api/product/${_id}`)
@@ -21,6 +24,10 @@ function Details() {
   if (!item) return <div>Loading...</div>; // Loader
   const isInCart = cartItems.some((cartItem) => cartItem._id === item._id);
 
+  const buy = (item) => {
+    addToCart(item)
+    navigate('/cart');
+  }
   return (
     <>
       <div className="md:flex items-start mt-20 justify-center py-12 2xl:px-20 md:px-6 px-4">
@@ -99,7 +106,9 @@ function Details() {
             >
               {isInCart ? 'Remove from Cart' : 'Add to Cart'}
             </button>
-            <button className="w-full md:w-auto px-6 py-3 bg-green-600 text-white rounded-lg hover:bg-green-500 focus:outline-none">
+            <button className="w-full md:w-auto px-6 py-3 bg-green-600 text-white rounded-lg hover:bg-green-500 focus:outline-none"
+              onClick={() => buy(item)}
+            >
               Buy Now
             </button>
           </div>
