@@ -1,12 +1,13 @@
 import React, { useState } from "react";
 import { useProducts } from "../context/ContentProvider";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from 'react-router-dom';
 import toast from "react-hot-toast";
 import { TiDelete } from "react-icons/ti";
 
 function Cart() {
   const navigate = useNavigate();
+  const location = useLocation();
   const { removeFromCart, cartItems } = useProducts();
   const [quantities, setQuantities] = useState(
     cartItems.reduce((acc, item) => {
@@ -31,7 +32,14 @@ function Cart() {
 
   const calculateTotal = () => {
     return cartItems.reduce(
-      (total, item) => total + item.price * (quantities[item._id] || 1),
+      (total, item) => total + (item.price - item.discountPrice) * (quantities[item._id] || 1),
+      0
+    );
+  };
+
+  const calculateDiscount = () => {
+    return cartItems.reduce(
+      (totalDiscount, item) => totalDiscount + item.discountPrice * (quantities[item._id] || 1),
       0
     );
   };
@@ -48,7 +56,7 @@ function Cart() {
     const token = localStorage.getItem("authToken");
 
     if (!token) {
-      navigate("/login");
+      navigate('/login', { state: { from: location } });
       return;
     }
 
@@ -143,7 +151,7 @@ function Cart() {
                             {/* Price */}
                             <p className="text-sm font-bold text-gray-800 mr-4 md:text-lg md:mr-6">
                               ${(
-                                product.price *
+                                (product.price - product.discountPrice) *
                                 (quantities[product._id] || 1)
                               ).toFixed(2)}
                             </p>
@@ -177,7 +185,7 @@ function Cart() {
                     <div className="border-t pt-4">
                       <div className="flex justify-between text-lg font-semibold">
                         <p>Discount:</p>
-                        <p className="text-green-600">- $95.00</p>
+                        <p className="text-green-600">- ${calculateDiscount().toFixed(2)}</p>
                       </div>
                       <div className="flex justify-between bg-blue-600 text-white px-6 py-2 rounded-lg mt-4">
                         <h5>Total:</h5>
