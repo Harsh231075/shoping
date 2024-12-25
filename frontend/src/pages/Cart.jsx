@@ -84,7 +84,7 @@ function Cart() {
 
     try {
       const response = await axios.post(
-        "http://localhost:4001/api/orders/place",
+        "https://shoping-txma.onrender.com/api/orders/place",
         orderData,
         {
           headers: {
