@@ -11,7 +11,11 @@ const app = express();
 const port = process.env.PORT || 3000;
 
 app.use(bodyParser.json());
-app.use(cors());
+app.use(cors(
+  {
+    origin: process.env.FRONTEND_URL || "*"
+  }
+));
 
 // Connect to MongoDB
 connectDB();
